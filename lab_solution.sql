@@ -7,7 +7,7 @@
 	#- 1.2. Express the **average movie duration in hours and minutes**. Don't use decimals.
      # - *Hint: Look for floor and round functions.*
      select floor(avg (length)/ 60) as hours,
-			floor(avg(length)% 60) as minutes
+			round(avg(length)% 60) as minutes
      from film;
      
 ## 2. You need to gain insights related to rental dates:
@@ -48,8 +48,8 @@
 ## To achieve this, you need to retrieve the **concatenated first and last names of customers**, along with the **first 3 characters 
 ## of their email** address, so that you can address them by their first name and use their email address to send personalized recommendations. 
 ## The results should be ordered by last name in ascending order to make it easier to use the data.*
-select concat(first_name, " ",last_name),
-	left(email,3)
+select concat(first_name, " ",last_name) as full_name,
+	left(email,3) as email_prefix
 from customer
 order by last_name;
 
