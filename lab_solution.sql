@@ -19,17 +19,16 @@
      
 	# - 2.2 Retrieve rental information and add two additional columns to show the **month and weekday of the rental**. Return 20 rows of results.
     select *,
-		   month(rental_date) as month_rental,
-           weekday(rental_date) as weekday_rental
+		   DATE_FORMAT(rental_date, '%M') AS month_rental,
+           DATE_FORMAT(rental_date, '%W') AS weekday_rental
     from rental
     limit 20;
 	
     # - 2.3 *Bonus: Retrieve rental information and add an additional column called `DAY_TYPE` with values **'weekend' or 'workday'**, depending on the day of the week.*
      # - *Hint: use a conditional expression.*
      select *,	
-			weekday(rental_date) as weekday_rental,
-			case when weekday(rental_date) in (0,1,2,3,4) then 'workday'
-			else 'weekend' end as day_type
+			CASE WHEN DATE_FORMAT(rental_date, '%W') IN ('Saturday', 'Sunday') THEN 'weekend'
+			ELSE 'workday' END AS day_type
      from rental;
      
 ## 3. You need to ensure that customers can easily access information about the movie collection.
@@ -100,6 +99,8 @@ order by mean_duration desc;
     order by mean_duration desc;
     
 #3. *Bonus: determine which last names are not repeated in the table `actor`.* 
-select distinct 
-		last_name
-from actor;
+
+SELECT last_name
+FROM actor
+GROUP BY last_name
+HAVING COUNT(*) = 1;
