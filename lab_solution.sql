@@ -1,12 +1,15 @@
 ## Challenge 1
 ## 1. You need to use SQL built-in functions to gain insights relating to the duration of movies:
 	#- 1.1 Determine the **shortest and longest movie durations** and name the values as `max_duration` and `min_duration`.
-	select max(length) as max_duration,
+	select 
+		   max(length) as max_duration,
 		   min(length) as min_duration
 	from film;
+    
 	#- 1.2. Express the **average movie duration in hours and minutes**. Don't use decimals.
      # - *Hint: Look for floor and round functions.*
-     select floor(avg (length)/ 60) as hours,
+     select 
+			floor(avg (length)/ 60) as hours,
 			round(avg(length)% 60) as minutes
      from film;
      
@@ -18,7 +21,8 @@
      from rental;
      
 	# - 2.2 Retrieve rental information and add two additional columns to show the **month and weekday of the rental**. Return 20 rows of results.
-    select *,
+    select 
+			*,
 		   DATE_FORMAT(rental_date, '%M') AS month_rental,
            DATE_FORMAT(rental_date, '%W') AS weekday_rental
     from rental
@@ -26,7 +30,8 @@
 	
     # - 2.3 *Bonus: Retrieve rental information and add an additional column called `DAY_TYPE` with values **'weekend' or 'workday'**, depending on the day of the week.*
      # - *Hint: use a conditional expression.*
-     select *,	
+     select 
+			*,	
 			CASE WHEN DATE_FORMAT(rental_date, '%W') IN ('Saturday', 'Sunday') THEN 'weekend'
 			ELSE 'workday' END AS day_type
      from rental;
@@ -48,8 +53,9 @@
 ## To achieve this, you need to retrieve the **concatenated first and last names of customers**, along with the **first 3 characters 
 ## of their email** address, so that you can address them by their first name and use their email address to send personalized recommendations. 
 ## The results should be ordered by last name in ascending order to make it easier to use the data.*
-select concat(first_name, " ",last_name) as full_name,
-	left(email,3) as email_prefix
+select 
+		concat(first_name, " ",last_name) as full_name,
+		left(email,3) as email_prefix
 from customer
 order by last_name;
 
@@ -89,18 +95,18 @@ group by rating
 order by mean_duration desc;
 
 	# - 2.2 Identify **which ratings have a mean duration of over two hours** in order to help select films for customers who prefer longer movies.
-     select 
-			count(distinct film_id) as total_films,
-			round(avg(length),2) as mean_duration,
-		    rating
-    from film
-    group by rating
-	having  mean_duration > 120
-    order by mean_duration desc;
+select 
+		count(distinct film_id) as total_films,
+		round(avg(length),2) as mean_duration,
+		rating
+from film
+group by rating
+having  mean_duration > 120
+order by mean_duration desc;
     
 #3. *Bonus: determine which last names are not repeated in the table `actor`.* 
-
-SELECT last_name
-FROM actor
-GROUP BY last_name
-HAVING COUNT(*) = 1;
+select 
+		last_name
+from actor
+group by last_name
+having COUNT(*) = 1;
